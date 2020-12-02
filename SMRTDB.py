@@ -13,12 +13,12 @@ class File(Base): # Table files for SMRT file header
     __tablename__ = 'files'
 
     id = Column(Integer, primary_key=True)
-    ref = Column(String(8), unique=False)
+    ref = Column(String(8), unique=True, nullable=False)
     type = Column(String(4), nullable=False)
     companyid = Column(String, nullable=False)
     createdts = Column(DateTime, nullable=False)
     insertedts = Column(DateTime, nullable=False, default=datetime.utcnow)
-    data = relationship('Reading', back_populates='filename')
+    data = relationship('Reading', back_populates='filename', cascade="all, delete, delete-orphan")
 
     def __repr__(self):
         return f"<File(ref={self.ref}, company={self.companyid}, created={self.createdts})>"
@@ -26,7 +26,7 @@ class File(Base): # Table files for SMRT file header
 class Reading(Base): # Table readings for actural meter readings linked to filename
     __tablename__ = 'readings'
     id = Column(Integer, primary_key=True)
-    meterid = Column(String(10), nullable=False)
+    meterid = Column(String(9), nullable=False)
     readingdate = Column(String(8), nullable=False)
     timestamp = Column(DateTime, nullable=False)
     value = Column(Float, nullable=False)
@@ -35,7 +35,7 @@ class Reading(Base): # Table readings for actural meter readings linked to filen
     UniqueConstraint(meterid, timestamp)
 
     def __repr__(self):
-        return f"Reading<File={self.filename}, meter={self.meterid}, reading={self.value}, date={self.readingdate}>"
+        return f"Reading<File={self.filename.ref}, meter={self.meterid}, reading={self.value}, date={self.readingdate}>"
 
 # Create session operator
 Session = sessionmaker(bind=engine)
