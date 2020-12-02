@@ -1,5 +1,11 @@
 .vscode
 .virtual_documents
 .ipynb_checkpoints
+<<<<<<< HEAD
 Test.ipynb
 test.py
+=======
+test.db
+Test.ipynb
+test.py
+>>>>>>> e7d15b9a183c3ce10462622d460dd9aa7e2e08f6
