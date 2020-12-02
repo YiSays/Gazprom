@@ -1,7 +1,5 @@
 .vscode
 .virtual_documents
 .ipynb_checkpoints
-test.db
 Test.ipynb
 test.py
-__pycache__
