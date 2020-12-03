@@ -29,6 +29,10 @@ class SMRT:
             self.get_header(f)
             self.get_readings(f)
             self.valid=False
+        # overwrite duplicated readings
+        self.readings.sort_values('FileRef', inplace=True)
+        self.readings.drop_duplicates(subset=['MeterID','Date','Time'],keep='last',inplace=True)
+        self.readings.reset_index(inplace=True)
 
     def validate(self, file=None):
         if not self.valid:
@@ -91,10 +95,10 @@ class SMRT:
             self.session.add(dbrow)
         try:
             self.session.commit()
-            print('File headers inserted into Table files.')
+            print(f'{self.headers.shape[0]} File headers inserted into TABLE files.')
         except Exception as e:
             print(e)
-            print('insert_header session rolled back.')
+            print('ERROR: insert_header session rolled back.')
         else:
             self.session.rollback()
     
@@ -111,7 +115,7 @@ class SMRT:
         
         try:
             self.session.commit()
-            print('Meter readings inserted into Table readings.')
+            print(f'{self.readings.shape[0]} meter readings inserted into TABLE readings.')
         except Exception as e:
             print(e)
             print(f"insert reading data for file {file.ref} \nsession rolled back.")
