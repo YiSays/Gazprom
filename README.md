@@ -17,7 +17,7 @@ It as two parts, one for the database schema/model and the other one for data pa
 
 ## Data Model / Database Schema
 
-The DB Model has been defined and created by [SMRTDB.py](SMRTDB.py) using ORM library **SQLAlchemy**, with a connection to a [testing database file](db/smrt.db) which could be easily relocated to the prodution database after dev stage.
+The DB Model has been defined and created by [SMRTDB.py](SMRTDB.py) using ORM library **SQLAlchemy**, with a connection to a [testing database file](db/) which could be easily relocated to the prodution database after dev stage.
 
  - The database (smrt.db) has two tables *TABLE files* (class **File** in ORM) and *TABLE readings* (class **Reading** in ORM).
  
@@ -115,7 +115,7 @@ SMRT data has been parsed and saved in dataframe format as attributes of 'header
 >>>  
 ```
 ---
-Upload into database
+### Upload into database
 
 To upload the data into databse, just use the 'db_insert' method of the parser.
 
